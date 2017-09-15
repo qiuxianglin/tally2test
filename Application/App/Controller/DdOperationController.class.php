@@ -1841,5 +1841,48 @@ class DdOperationController extends  BaseController
 		}
 		echo json_encode ($res,JSON_UNESCAPED_UNICODE);
 	}
+	
+	/**
+	 * 获取提单号 
+	 * @param int $instruction_id:指令ID
+	 * @return array|boolean
+	 * @param @return code:返回码
+	 * @param @return msg:返回码说明
+	 * @param @return blno:返回内容
+	 */
+	public function getblno()
+	{
+		if(I('post.instruction_id'))
+		{
+			$instruction_id = trim(I('post.instruction_id'));
+			//通过指令ID获取所有的配货提单号
+			$result = M('dd_plan_cargo')->alias('ca')->field("ca.blno")
+			->join("left join tally_dd_instruction i on i.id='$instruction_id'")
+			->join("left join tally_dd_plan p on p.id=i.plan_id")
+			->where("ca.plan_id = p.id")
+			->select();
+			if($result !== false)
+			{
+				$res = array(
+						'code'   =>   $this->ERROR_CODE_COMMON['SUCCESS'],
+						'msg'    =>   $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['SUCCESS']],
+						'blno'   =>   $result
+				);
+			}else{
+				//数据库连接错误
+				$res = array (
+						'code' => $this->ERROR_CODE_COMMON['DB_ERROR'],
+						'msg' => $this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['DB_ERROR']]
+				);
+			}
+		}else{
+			//参数缺失，参数不正确
+			$res=array(
+					'code'=>$this->ERROR_CODE_COMMON['PARAMETER_ERROR'],
+					'msg'=>$this->ERROR_CODE_COMMON_ZH[$this->ERROR_CODE_COMMON['PARAMETER_ERROR']]
+			);
+		}
+		echo json_encode ($res,JSON_UNESCAPED_UNICODE);
+	}
 }
 ?>
