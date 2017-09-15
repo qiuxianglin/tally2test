@@ -1,0 +1,10 @@
+Time:2017-09-08 13:39:11
+内容:[{"id":"354","ctnno":"BMOU2852245","ctn_size":"20GP","ctn_master":"3","lcl":"F","pre_number":"2356","status":"1","operator_id":"8","instruction_id":"322","overweight":"N","load":null,"cmaster":"COSCO","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-09-08 13:40:31
+内容:[{"id":"354","ctnno":"BMOU2852245","ctn_size":"20GP","ctn_master":"3","lcl":"F","pre_number":"2356","status":"1","operator_id":"8","instruction_id":"322","overweight":"N","load":null,"cmaster":"COSCO","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-09-08 18:38:23
+内容:{"uid":"20","ctn_id":"349","sealno":"333","cargo_weight":"222"}
+Time:2017-09-08 18:41:59
+内容:[{"id":"349","ctnno":"OOLU5757083","ctn_size":"40HC","ctn_master":"10","lcl":"N","pre_number":"981","status":"1","operator_id":"20","instruction_id":"321","overweight":"N","load":null,"cmaster":"OOCL","cargo_weight":"222","sealno":"333","lclo":"\u6574\u7bb1"}]
+Time:2017-09-08 19:12:02
+内容:[{"id":"349","ctnno":"OOLU5757083","ctn_size":"40HC","ctn_master":"10","lcl":"N","pre_number":"981","status":"1","operator_id":"20","instruction_id":"321","overweight":"N","load":null,"cmaster":"OOCL","cargo_weight":null,"sealno":null,"lclo":"\u6574\u7bb1"}]

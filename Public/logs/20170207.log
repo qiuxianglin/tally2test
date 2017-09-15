@@ -1,0 +1,6 @@
+Time:2017-02-07 09:02:22
+内容:[{"id":"11","ctnno":"BMOU2852245","ctn_size":"20GP","ctn_master":"6","lcl":"F","pre_number":"3","status":"1","operator_id":"8","instruction_id":"7","cmaster":"\u4e2d\u8fdc","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-02-07 09:03:14
+内容:[{"id":"11","ctnno":"BMOU2852245","ctn_size":"20GP","ctn_master":"6","lcl":"F","pre_number":"3","status":"1","operator_id":"8","instruction_id":"7","cmaster":"\u4e2d\u8fdc","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-02-07 09:03:55
+内容:{"uid":"8","ctn_id":"11","sealno":"\uff5e\uff5e","cargo_weight":"77"}

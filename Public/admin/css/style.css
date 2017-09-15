@@ -1,0 +1,106 @@
+@charset "utf-8";
+/* CSS Document */
+/*全局控制*/
+body{margin:0;
+padding:0;
+font-size:12px;
+font-family:"宋体","微软雅黑";
+color:#FFF;
+background:url(../images/bg.png);
+}
+
+/*重置浏览器的默认样式*/
+h1,h2,h3,p,ul,li,dl,dt,dd,img,input{
+margin:0;
+padding:0;
+list-style:none;
+border:0;}
+
+/*main*/
+#main{
+	width:900px;
+	height:360px;
+	margin:10% auto;
+}
+#main .left{
+	width:280px;
+	height:100%;
+	float:left;
+	}
+#main .left img{
+	width:100%;
+	height:90px;
+	margin-top:120px;	
+	}
+#main .left .loginimg{
+	width:152px;
+	height:54px;
+	margin-top:70px;
+	margin-left:36px;
+	}
+#main .right{
+	width:605px;
+	height:100%;
+	float:right;
+	padding-left:15px;
+	}
+#main .right .future{
+	margin-left:0px;
+	}
+#main .right .login{
+	margin-top:52px;
+	width:489px;
+	height:260px;
+	padding-left:116px;
+	background:url(../images/loginbg.png);
+	}
+#main .right .login p{
+	font-size:16px;
+	padding-top:5px;
+	}
+.loginform{
+	width:258px;
+	height:186px;
+	margin-top:21px;
+	color:#000;
+	font-size:14px;
+	}
+.loginform .user{
+	height:30px;
+	width:199px;
+	padding-left:5px;
+	background:url(../images/input.png);
+	}
+.loginform .pwd{
+	height:30px;
+	width:199px;
+	padding-left:5px;
+	margin-top:15px;
+	background:url(../images/input.png);
+	}
+.loginform .auth{
+	height:22px;
+	width:102px;
+	padding-left:5px;
+	margin-top:15px;
+	background:url(../images/input2.png);
+	}
+.loginform .codeimg{
+	margin-bottom:-5px;
+}
+.loginform .img{
+	padding-left:10px;
+	width:70px;
+	height:20px;}
+.loginform .remember{
+	width:23px;
+	}
+.loginform .sumbit{
+	width:96px;
+	height:38px;
+	font-size:24px;
+	color:#FFF;
+	margin-top:34px;
+	margin-left:35px;
+	background:url(../images/menu.png);
+	}

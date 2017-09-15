@@ -1,0 +1,48 @@
+Time:2017-03-01 14:02:09
+内容:{"requestdata":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\t\t<Manifest>\n\t\t\t<BILL>\n\t\t\t\t <ORDERID>20170301<\/ORDERID>\n\t\t\t\t <ORDER_DATE>20170301140209<\/ORDER_DATE>\n\t\t         <VSLNAME>\u4f17\u8bda<\/VSLNAME>\n\t\t         <VOYAGE>third<\/VOYAGE>\n\t\t         <BLNO>THIRD001<\/BLNO>\n\t\t         <APPLYCODE>0000<\/APPLYCODE>\n          \t\t <APPLYNAME>\u5357\u4eac\u4e2d\u7406<\/APPLYNAME>\n          \t\t <PAYCODE>WYCJ<\/PAYCODE>\n          \t\t <PAYMEN>\u5916\u8fd0\u957f\u6c5f<\/PAYMEN>\n          \t\t <CARGONAME>\u8863\u670d<\/CARGONAME>\n          \t\t <NUMBERSOFPACKAGES>2<\/NUMBERSOFPACKAGES>\n          \t\t <PACKAGE>2<\/PACKAGE>\n         \t\t <MARK>3<\/MARK>\n          \t\t <LCL>N<\/LCL>\n          \t\t <CONSIGNEE>3<\/CONSIGNEE>\n          \t\t <UNPACKAGINGPLACE>\u5316\u5b66\u65b0\u80fd\u6e90<\/UNPACKAGINGPLACE>\n          \t\t <CLASSES>3<\/CLASSES>\n          \t\t <UNDGNO>3<\/UNDGNO>\n          \t\t <CONTACTUSER>3<\/CONTACTUSER>\n          \t\t <CONTACT>33333<\/CONTACT>\n          \t\t <NOTE>3333333<\/NOTE>\n          \t\t <TRANSIT>CY<\/TRANSIT>\n          \t\t <CATEGORY>2<\/CATEGORY>\n\t\t\t<\/BILL>\n            <CTNS>\n          \t\t \t\t<CTN>\n\t\t\t\t            <CTNNO>BEAU2082746<\/CTNNO>\n\t\t\t\t            <CTNSIZE>20<\/CTNSIZE>\n\t\t\t\t            <CTNTYPE>GP<\/CTNTYPE>\n\t\t\t\t            <SEALNO>THIRD001<\/SEALNO>\n\t\t\t\t            <NUMBERSOFPACKAGES>2<\/NUMBERSOFPACKAGES>\n\t\t\t\t            <WEIGHT>2<\/WEIGHT>\n\t\t\t\t            <VOLUME>2<\/VOLUME>\n\t\t\t\t            <FLFLAG>F<\/FLFLAG>\n\t\t\t\t            <CLASSES>2<\/CLASSES>\n\t\t\t\t            <UNDGNO>2222222<\/UNDGNO>\n\t\t\t\t         <\/CTN><CTN>\n                    <CTNNO>CXDU1057784<\/CTNNO>\n                    <CTNSIZE>20<\/CTNSIZE>\n                    <CTNTYPE>GP<\/CTNTYPE>\n                    <SEALNO>adsad<\/SEALNO>\n                    <NUMBERSOFPACKAGES>2<\/NUMBERSOFPACKAGES>\n                    <WEIGHT>3<\/WEIGHT>\n                    <VOLUME>3<\/VOLUME>\n                    <FLFLAG>F<\/FLFLAG>\n                    <CLASSES>3<\/CLASSES>\n                    <UNDGNO>3<\/UNDGNO>\n              <\/CTN><CTN>\n                    <CTNNO>ITGU1054273<\/CTNNO>\n                    <CTNSIZE>30<\/CTNSIZE>\n                    <CTNTYPE>QB<\/CTNTYPE>\n                    <SEALNO>ASDASDAS<\/SEALNO>\n                    <NUMBERSOFPACKAGES>23<\/NUMBERSOFPACKAGES>\n                    <WEIGHT>23<\/WEIGHT>\n                    <VOLUME>23<\/VOLUME>\n                    <FLFLAG>F<\/FLFLAG>\n                    <CLASSES>23<\/CLASSES>\n                    <UNDGNO>23<\/UNDGNO>\n              <\/CTN>\n          \t<\/CTNS>\n\t\t<\/Manifest>","sign":"ff4c38c974b328fb5c70dfd7d7ca41b1"}
+Time:2017-03-01 14:21:40
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 14:22:56
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 15:36:12
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 15:36:42
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 15:53:35
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 15:53:44
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 15:53:52
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 16:44:55
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 16:53:22
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 16:59:47
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:00:41
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:00:52
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:01:35
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:07:40
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:08:54
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:09:29
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:14:33
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:14:56
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:15:55
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:17:55
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:19:51
+内容:[{"id":"14","ctnno":"ITGU1054273","ctn_size":"40OT","ctn_master":"2","lcl":"L","pre_number":"3","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:19:54
+内容:[{"id":"12","ctnno":"CXDU1057784","ctn_size":"20GP","ctn_master":"2","lcl":"F","pre_number":"8","status":"1","operator_id":"8","instruction_id":"9","cmaster":"\u51ef\u901a","cargo_weight":null,"sealno":null,"lclo":"\u62fc\u7bb1"}]
+Time:2017-03-01 17:29:33
+内容:{"uid":"8","ctn_id":"14","sealno":"28","cargo_weight":"11"}
