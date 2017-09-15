@@ -202,6 +202,7 @@ class DdProveModel extends Model
 					'content' => $content,                          // 内容
 					'remark' => $remark,                            // 备注
 					'consignee' => $planMsg ['consignee'],          // 对接人
+					'createtime'  => date("Y-m-d H:i:s")
 			);
 			if(!$this->create($data))
 			{
