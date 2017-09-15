@@ -1844,7 +1844,7 @@ class DdOperationController extends  BaseController
 	
 	/**
 	 * 获取提单号 
-	 * @param int $instruction_id:指令ID
+	 * @param int $plan_id:预报ID
 	 * @return array|boolean
 	 * @param @return code:返回码
 	 * @param @return msg:返回码说明
@@ -1852,14 +1852,14 @@ class DdOperationController extends  BaseController
 	 */
 	public function getblno()
 	{
-		if(I('post.instruction_id'))
+		if(I('post.plan_id'))
 		{
-			$instruction_id = trim(I('post.instruction_id'));
+			$plan_id = trim(I('post.plan_id'));
 			//通过指令ID获取所有的配货提单号
-			$result = M('dd_plan_cargo')->alias('ca')->field("ca.blno")
-			->join("left join tally_dd_instruction i on i.id='$instruction_id'")
-			->join("left join tally_dd_plan p on p.id=i.plan_id")
-			->where("ca.plan_id = p.id")
+			$result = M('dd_plan_cargo')->field("blno")
+// 			->join("left join tally_dd_instruction i on i.id='$instruction_id'")
+// 			->join("left join tally_dd_plan p on p.id=i.plan_id")
+			->where("plan_id = '$plan_id'")
 			->select();
 			if($result !== false)
 			{
