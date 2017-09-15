@@ -33,10 +33,10 @@
 
 						<tr>
 							<td height="36" align="right" valign="middle">申报公司代码：</td>
-							<td><input type="text" class="article" name="APPLYCODE" required="required" /></td>
+							<td><input type="text" class="article" name="APPLYCODE" required="required" value="0000"/></td>
 
 							<td height="36" align="right" valign="middle">申报公司名称：</td>
-							<td><input type="text" class="article" name="APPLYNAME" value="" />
+							<td><input type="text" class="article" name="APPLYNAME" value="南京中理" />
 							</td>
 							
 							<td height="36" align="right" valign="middle">拆箱地点：</td>
