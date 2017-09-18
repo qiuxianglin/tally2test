@@ -577,92 +577,116 @@ class ShiftModel extends Model {
 				{
 					$res = $res_a;
 				}else{
-					// 修改工班状态为已交班
-					$data = array (
-							'mark' => '1',
-							'end_time' => date ( 'Y-m-d H:i:s' )
-					);
-					$res_g = $this->where ( "shift_id='$shift_id'" )->save ( $data );
-					if ($res_g != false) {
-						// 新增一条交班记录
-						$data2 = array (
-								'exchanged_id' => $shift_id,
-								'user_exchanged_id' => $uid,
-								'exchanged_time' => date ( 'Y-m-d H:i:s' ),
-								'note' => $note
+					//判断该工班下面的指令箱已铅封的是否审核
+// 					$res_o = $this->isexamine( $uid, $shift_id );
+// 					if($res_o['code'] != 0){
+// 						$res = $res_o;
+// 					}else{
+						// 修改工班状态为已交班
+						$data = array (
+								'mark' => '1',
+								'end_time' => date ( 'Y-m-d H:i:s' )
 						);
-						$ShiftDetail = new \Common\Model\ShiftDetailModel ();
-						$res_tf = $ShiftDetail->add ( $data2 );
-						// 工班的状态已改为交班，已新增一条交班记录，便于下次同部门组工班来接班
-						if ($res_tf !== false) {
-							// ①修改派工状态为已交班
-							$Dispatch = new \Common\Model\DispatchModel ();
-							$data_r = array (
-									'mark' => '1'
+						$res_g = $this->where ( "shift_id='$shift_id'" )->save ( $data );
+						if ($res_g != false) {
+							// 新增一条交班记录
+							$data2 = array (
+									'exchanged_id' => $shift_id,
+									'user_exchanged_id' => $uid,
+									'exchanged_time' => date ( 'Y-m-d H:i:s' ),
+									'note' => $note
 							);
-							$Dispatch->where ( "shift_id='$shift_id'" )->save ( $data_r );
-							// 根据工班号从派工单获取业务系统与指令
-							$res_repair = $Dispatch->where ( "shift_id='$shift_id'" )->select ();
-							// 指令状态
-							$instruction_status = json_decode ( instruction_status, true );
-							// 已完成的指令
-							$finished_instruction_status = $instruction_status ['finish'];
-							// 修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
-							$data_i = array (
-									'status' => $instruction_status ['not_start']
-							);
-							// 箱状态
-							$ctn_status = json_decode ( ctn_status, true );
-							foreach ( $res_repair as $r ) {
-								// 指令ID
-								$instruction_id = $r ['instruction_id'];
-								// 区分业务系统
-								switch ($r ['business']) {
-									case 'qbzx' :
-											
-										// ②修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
-										$QbzxInstruction = new \Common\Model\QbzxInstructionModel ();
-										$QbzxInstruction->where ( "id='$instruction_id' and status!='$finished_instruction_status'" )->save ( $data_i );
-										// ③修改指令下箱状态为未开始
-										$where = array (
-												'instruction_id' => $instruction_id,
-												'status' => $ctn_status ['workin']
-										) // 只修改工作中的箱子
-										;
-										$data_c = array (
-												'status' => $ctn_status ['nostart'], // 修改箱状态为未开始
-												'operator_id' => null
-										) // 置空操作人
-										;
-										$QbzxInstructionCtn = new \Common\Model\QbzxInstructionCtnModel ();
-										$QbzxInstructionCtn->where ( $where )->save ( $data_c );
-										// ④修改作业表的可修改权限为3，即只有部门长可以修改
-										// 对该指令下的所有配箱进行权限修改
-										$ctnList = $QbzxInstructionCtn->where ( "instruction_id='$instruction_id'" )->field ( 'id' )->select ();
-										foreach ( $ctnList as $cl ) {
-											$ctn_allid .= $cl ['id'] . ',';
-										}
-										if ($ctn_allid) {
-											$ctn_allid = substr ( $ctn_allid, 0, - 1 );
-											$QbzxOperation = new \Common\Model\QbzxOperationModel ();
-											$data_auth = array (
-													'per_no' => '3'
-											);
-											$QbzxOperation->where ( "ctn_id in ($ctn_allid)" )->save ( $data_auth );
-										}
-										break;
-									case 'dd' :
-											
-										// ②修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
-										$DdInstruction = new \Common\Model\DdInstructionModel ();
-										$DdInstruction->where ( "id='$instruction_id' and status!='$finished_instruction_status'" )->save ( $data_i );
-										// 根据指令ID获取预报计划ID，进而获取配箱
-										$res_p = $DdInstruction->where ( "id='$instruction_id'" )->field ( 'plan_id' )->find ();
-										if ($res_p ['plan_id']) {
-											$plan_id = $res_p ['plan_id'];
+							$ShiftDetail = new \Common\Model\ShiftDetailModel ();
+							$res_tf = $ShiftDetail->add ( $data2 );
+							// 工班的状态已改为交班，已新增一条交班记录，便于下次同部门组工班来接班
+							if ($res_tf !== false) {
+								// ①修改派工状态为已交班
+								$Dispatch = new \Common\Model\DispatchModel ();
+								$data_r = array (
+										'mark' => '1'
+								);
+								$Dispatch->where ( "shift_id='$shift_id'" )->save ( $data_r );
+								// 根据工班号从派工单获取业务系统与指令
+								$res_repair = $Dispatch->where ( "shift_id='$shift_id'" )->select ();
+								// 指令状态
+								$instruction_status = json_decode ( instruction_status, true );
+								// 已完成的指令
+								$finished_instruction_status = $instruction_status ['finish'];
+								// 修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
+								$data_i = array (
+										'status' => $instruction_status ['not_start']
+								);
+								// 箱状态
+								$ctn_status = json_decode ( ctn_status, true );
+								foreach ( $res_repair as $r ) {
+									// 指令ID
+									$instruction_id = $r ['instruction_id'];
+									// 区分业务系统
+									switch ($r ['business']) {
+										case 'qbzx' :
+												
+											// ②修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
+											$QbzxInstruction = new \Common\Model\QbzxInstructionModel ();
+											$QbzxInstruction->where ( "id='$instruction_id' and status!='$finished_instruction_status'" )->save ( $data_i );
 											// ③修改指令下箱状态为未开始
 											$where = array (
-													'plan_id' => $plan_id,
+													'instruction_id' => $instruction_id,
+													'status' => $ctn_status ['workin']
+											) // 只修改工作中的箱子
+											;
+											$data_c = array (
+													'status' => $ctn_status ['nostart'], // 修改箱状态为未开始
+													'operator_id' => null
+											) // 置空操作人
+											;
+											$QbzxInstructionCtn = new \Common\Model\QbzxInstructionCtnModel ();
+											$QbzxInstructionCtn->where ( $where )->save ( $data_c );
+											// ④修改作业表的可修改权限为3，即只有部门长可以修改
+											// 对该指令下的所有配箱进行权限修改
+											$ctnList = $QbzxInstructionCtn->where ( "instruction_id='$instruction_id'" )->field ( 'id' )->select ();
+											foreach ( $ctnList as $cl ) {
+												$ctn_allid .= $cl ['id'] . ',';
+											}
+											if ($ctn_allid) {
+												$ctn_allid = substr ( $ctn_allid, 0, - 1 );
+												$QbzxOperation = new \Common\Model\QbzxOperationModel ();
+												$data_auth = array (
+														'per_no' => '3'
+												);
+												$QbzxOperation->where ( "ctn_id in ($ctn_allid)" )->save ( $data_auth );
+											}
+											break;
+										case 'dd' :
+												
+											// ②修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
+											$DdInstruction = new \Common\Model\DdInstructionModel ();
+											$DdInstruction->where ( "id='$instruction_id' and status!='$finished_instruction_status'" )->save ( $data_i );
+											// 根据指令ID获取预报计划ID，进而获取配箱
+											$res_p = $DdInstruction->where ( "id='$instruction_id'" )->field ( 'plan_id' )->find ();
+											if ($res_p ['plan_id']) {
+												$plan_id = $res_p ['plan_id'];
+												// ③修改指令下箱状态为未开始
+												$where = array (
+														'plan_id' => $plan_id,
+														'status' => $ctn_status ['workin']
+												) // 只修改工作中的箱子
+												;
+												$data_c = array (
+														'status' => $ctn_status ['nostart'], // 修改箱状态为未开始
+														'operator_id' => null
+												);
+												$DdPlanContainer = new \Common\Model\DdPlanContainerModel ();
+												$DdPlanContainer->where ( $where )->save ( $data_c );
+											}
+											break;
+										case 'cfs' :
+												
+											// ②修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
+											$CfsInstruction = new \Common\Model\CfsInstructionModel ();
+											$CfsInstruction->where ( "id='$instruction_id' and status!='$finished_instruction_status'" )->save ( $data_i );
+											// ③修改指令下箱状态为未开始--除了已铅封的箱子不修改（2为已铅封）
+											$where = array (
+													'instruction_id' => $instruction_id,
 													'status' => $ctn_status ['workin']
 											) // 只修改工作中的箱子
 											;
@@ -670,48 +694,30 @@ class ShiftModel extends Model {
 													'status' => $ctn_status ['nostart'], // 修改箱状态为未开始
 													'operator_id' => null
 											);
-											$DdPlanContainer = new \Common\Model\DdPlanContainerModel ();
-											$DdPlanContainer->where ( $where )->save ( $data_c );
-										}
-										break;
-									case 'cfs' :
-											
-										// ②修改指令状态为未派工，以方便下一工班派工--除了已完成的指令（2为已完成）
-										$CfsInstruction = new \Common\Model\CfsInstructionModel ();
-										$CfsInstruction->where ( "id='$instruction_id' and status!='$finished_instruction_status'" )->save ( $data_i );
-										// ③修改指令下箱状态为未开始--除了已铅封的箱子不修改（2为已铅封）
-										$where = array (
-												'instruction_id' => $instruction_id,
-												'status' => $ctn_status ['workin']
-										) // 只修改工作中的箱子
-										;
-										$data_c = array (
-												'status' => $ctn_status ['nostart'], // 修改箱状态为未开始
-												'operator_id' => null
-										);
-										$CfsInstructionCtn = new \Common\Model\CfsInstructionCtnModel ();
-										$CfsInstructionCtn->where ( $where )->save ( $data_c );
-										break;
+											$CfsInstructionCtn = new \Common\Model\CfsInstructionCtnModel ();
+											$CfsInstructionCtn->where ( $where )->save ( $data_c );
+											break;
+									}
 								}
+								$res = array (
+										'code' => $this->ERROR_CODE_COMMON ['SUCCESS'],
+										'msg' => '交班成功！'
+								);
+							} else {
+								// 数据库操作错误
+								$res = array (
+										'code' => $this->ERROR_CODE_COMMON ['DB_ERROR'],
+										'msg' => $this->ERROR_CODE_COMMON_ZH [$this->ERROR_CODE_COMMON ['DB_ERROR']]
+								);
 							}
-							$res = array (
-									'code' => $this->ERROR_CODE_COMMON ['SUCCESS'],
-									'msg' => '交班成功！'
-							);
 						} else {
 							// 数据库操作错误
 							$res = array (
 									'code' => $this->ERROR_CODE_COMMON ['DB_ERROR'],
 									'msg' => $this->ERROR_CODE_COMMON_ZH [$this->ERROR_CODE_COMMON ['DB_ERROR']]
 							);
-						}
-					} else {
-						// 数据库操作错误
-						$res = array (
-								'code' => $this->ERROR_CODE_COMMON ['DB_ERROR'],
-								'msg' => $this->ERROR_CODE_COMMON_ZH [$this->ERROR_CODE_COMMON ['DB_ERROR']]
-						);
-					}
+						}	
+// 					}
 				}
 			}
 		}
@@ -1305,7 +1311,7 @@ class ShiftModel extends Model {
 									{
 										$res = array(
 												'code'  =>  "211",
-												'msg'   =>  "该工班还有工作的qibo箱子未暂停作业"
+												'msg'   =>  "该工班（起驳）还有工作的箱子未暂停作业"
 										);
 										return $res;
 										exit;
@@ -1328,7 +1334,7 @@ class ShiftModel extends Model {
 									{
 										$res = array(
 												'code'  =>  "211",
-												'msg'   =>  "该工班还有工作的cfs箱子未暂停作业"
+												'msg'   =>  "该工班（cfs）还有工作的箱子未暂停作业"
 										);
 										return $res;
 										exit;
@@ -1337,6 +1343,31 @@ class ShiftModel extends Model {
 							}
 							break;
 						case 'dd':
+							//根据指令ID获取预报计划ID
+							$instruction = new \Common\Model\DdInstructionModel();
+							$plan_id = $instruction->field("plan_id")->where("id='$instruction_id'")->find();
+							//根据预报计划ID获取预报箱
+							$planid = $plan_id['plan_id'];
+							$planctn = new \Common\Model\DdPlanContainerModel();
+							$plan_ctn = $planctn->where("plan_id='$planctn'")->select();
+							//判断指令下的工作中的配箱是否暂停作业
+							foreach($plan_ctn as $v)
+							{
+								if($v['status'] == 1)
+								{
+									$operation = new \Common\Model\DdOperationModel();
+									$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop')->find();									$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop')->find();
+									if($res_r['is_stop'] != 'Y')
+									{
+										$res = array(
+												'code'  =>  "211",
+												'msg'   =>  "该工班（拆箱）还有工作的箱子未暂停作业"
+										);
+										return $res;
+										exit;
+									}
+								}
+							}
 							break;
 							
 					}
@@ -1349,5 +1380,70 @@ class ShiftModel extends Model {
 		}
 		return $res;
 	}
+	
+	//判断该工班下面的箱已铅封未审核
+// 	public function isexamine( $uid, $shift_id )
+// 	{
+// 		// 根据工班号从派工单获取业务系统与指令
+// 		$Dispatch = new \Common\Model\DispatchModel();
+// 		$res_repair = $Dispatch->field('instruction_id,business')->where ( "shift_id='$shift_id'" )->select ();
+// 		foreach ( $res_repair as $key => $r ) {
+// 			// 指令ID
+// 			$instruction_id = $r['instruction_id'];
+// 			// 区分业务系统
+// 			switch ($r['business']) {
+// 				case 'qbzx' :
+// 					// 获取所有指令下面的配箱及配箱装箱、状态
+// 					$QbzxInstructionCtn = new \Common\Model\QbzxInstructionCtnModel();
+// 					$ctnList = $QbzxInstructionCtn->where ( "instruction_id='$instruction_id'" )->field ( 'id,status' )->select ();
+// 					//判断指令下的已铅封的配箱是否审核作业
+// 					foreach($ctnList as $v)
+// 					{
+// 						if($v['status'] == 2)
+// 						{
+// 							$operation = new \Common\Model\QbzxOperationModel();
+// 							$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop,step,operation_examine')->find();
+								
+// 							if($res_r['is_stop'] != 'Y' and $res_r['step'] != '5' and $res_r['step'] != '0')
+// 							{
+// 								$res = array(
+// 										'code'  =>  "211",
+// 										'msg'   =>  "该工班还有起驳已铅封未审核的箱子"
+// 								);
+// 								return $res;
+// 								exit;
+// 							}
+// 						}
+// 					}
+// 					break;
+// 				case 'cfs' :
+// 					// ④修改指令状态为已派工--除了已完成的指令（2为已完成）
+// 					$CfsInstruction = new \Common\Model\CfsInstructionCtnModel();
+// 					$instruction_ctn = $CfsInstruction->where ( "id=$instruction_id" )->select();
+// 					//判断指令下的工作中的配箱是否暂停作业
+// 					foreach($instruction_ctn as $v)
+// 					{
+// 						if($v['status'] == 2)
+// 						{
+// 							$operation = new \Common\Model\CfsOperationModel();
+// 							$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop')->find();									$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop')->find();
+// 							if($res_r['is_stop'] != 'Y')
+// 							{
+// 								$res = array(
+// 										'code'  =>  "211",
+// 										'msg'   =>  "该工班还有cfs已铅封未审核的箱子"
+// 								);
+// 								return $res;
+// 								exit;
+// 							}
+// 						}
+// 					}
+// 					break;
+// 				case 'dd':
+// 					break;
+						
+// 			}
+// 		}
+// 	}
 }
 ?>
