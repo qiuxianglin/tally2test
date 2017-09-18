@@ -1012,6 +1012,11 @@ class CfsOperationController extends BaseController
 						);
 					}
 				} else {
+					$cfs_step=json_decode(cfs_step,true);
+					$data_o = array (
+							'step' => $cfs_step['levelin']
+					);
+					$operation->where ( "id='$operation_id'" )->save ( $data_o );
 					$res = array (
 							'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
 							'msg' => '成功',

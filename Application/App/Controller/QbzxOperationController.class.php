@@ -726,6 +726,11 @@ class QbzxOperationController extends BaseController
 						$res_car = $cargo_damage->addAll ( $data_damage );
 						if ($res_car !== false)
 						{
+							$qbzx_step=json_decode(qbzx_step,true);
+							$data_o = array (
+									'step' => $qbzx_step['levelin']
+							);
+							$operation->where ( "id='$operation_id'" )->save ( $data_o );
 							$res = array (
 									'code' => $this->ERROR_CODE_COMMON ['SUCCESS'],
 									'msg' => '成功',
