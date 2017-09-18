@@ -253,7 +253,7 @@ class QbzxOperationController extends BaseController
 			$sql = "select c.id from __PREFIX__qbzx_operation o,__PREFIX__qbzx_instruction_ctn c where c.id=o.ctn_id and c.id='$ctn_id' and c.status='1' and o.is_stop!='Y'";
 			$res_x = M ()->query ( $sql );
 			$n = count ( $res_x );
-			if ($n >= 50) {
+			if ($n >= 100) {
 				// 不能同时接50个以上箱子
 				$res = array (
 						'code' => $this->ERROR_CODE_OPERATION ['HAVE_THREEOPERATION_CTN'],
