@@ -296,6 +296,7 @@ class DdOperationController extends  BaseController
 				}else {
 					$detail['has_level']='N';
 				}
+				$detail['num_level'] = $level_num;
 				$res = array (
 						'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
 						'msg' => '成功',

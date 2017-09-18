@@ -629,11 +629,12 @@ class CfsOperationController extends BaseController
 			if ($detail !== false) {
 				//根据箱ID获取作业ID
 				$operation = new \Common\Model\CfsOperationModel();
-				$res_o=$operation->where("ctn_id=$ctn_id")->field('id')->find();
+				$res_o=$operation->where("ctn_id=$ctn_id")->field('id,step')->find();
 				$detail[0]['operation_id']=$res_o['id'];
 				//判断箱下面是否有关存在
 				$sql="select count(l.id) from __PREFIX__cfs_operation o,__PREFIX__cfs_operation_level l where o.ctn_id=$ctn_id and o.id=l.operation_id";
-				$level_num=M()->query($sql);
+				$level_num1=M()->query($sql);
+				$level_num = $level_num1[0]['count(l.id)'];
 				if($level_num>0)
 				{
 					$detail['has_level']='Y';
@@ -648,6 +649,9 @@ class CfsOperationController extends BaseController
 				{
 					$detail[0]['sealno']='';
 				}
+				//关号
+				$detail[0]['num_level']=$level_num;
+				$detail[0]['step'] = $res_o['step'];
 				$res = array (
 						'code' => $this->ERROR_CODE_COMMON['SUCCESS'],
 						'msg' => '成功',

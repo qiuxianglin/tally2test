@@ -1745,11 +1745,12 @@ class QbzxOperationController extends BaseController
 			if ($detail !== false) {
 				//根据箱ID获取作业ID
 				$operation = new \Common\Model\QbzxOperationModel();
-				$res_o=$operation->where("ctn_id=$ctn_id")->field('id')->find();
+				$res_o=$operation->where("ctn_id=$ctn_id")->field('id,step')->find();
 				$detail['operation_id']=$res_o['id'];
 				//判断箱下面是否有关存在
 				$sql="select count(l.id) from __PREFIX__qbzx_operation o,__PREFIX__qbzx_operation_level l where o.ctn_id=$ctn_id and o.id=l.operation_id";
-				$level_num=M()->query($sql);
+				$level_num1=M()->query($sql);
+				$level_num = $level_num1[0]['count(l.id)'];
 				if($level_num>0)
 				{
 					$detail['has_level']='Y';
@@ -1764,6 +1765,10 @@ class QbzxOperationController extends BaseController
 				{
 					$detail['sealno']='';
 				}
+				//关号
+				$detail['num_level'] = $level_num;
+				//步骤
+				$detail['step'] = $res_o['step'];
 				//箱状态
 				$ctn_status_d=json_decode(ctn_status_d,true);
 				$status_zh=$ctn_status_d[$detail['status']];
