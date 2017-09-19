@@ -41,7 +41,12 @@ class DdPlanContainerController extends BaseController
 			{
 				$this->error("件数、重量、体积为整数");
 			}
-
+			//检查该箱在该指令是否已存在
+			$res = $PlanContainer->field("ctnno")->where("plan_id='$plan_id' and ctnno='$ctnno'")->find();
+			if($res['ctnno'] != '')
+			{
+				$this->error('该箱号已存在！');
+			}
 			$data2 = array (
 					'ctnno' => $ctnno,
 					'ctnsize' => I('post.CTNSIZE'),

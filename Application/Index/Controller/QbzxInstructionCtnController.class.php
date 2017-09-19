@@ -72,6 +72,13 @@ class QbzxInstructionCtnController extends BaseController
 			}else {
 				$this->error('箱号不能为空！');
 			}
+			
+			//检查该箱在该指令是否已存在
+			$res = $instructionContainer->field("ctnno")->where("instruction_id='$instruction_id' and ctnno='$ctnno'")->find();
+			if($res['ctnno'] != '')
+			{
+				$this->error('该箱号已存在！');
+			}
 			$data=array(
 					'instruction_id'=>$instruction_id,
 					'ctnno'=>$ctnno,

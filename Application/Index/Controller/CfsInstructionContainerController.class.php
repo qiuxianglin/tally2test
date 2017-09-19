@@ -36,6 +36,13 @@ class CfsInstructionContainerController extends BaseController
 			}else {
 				$this->error('箱号不能为空！');
 			}
+			$instructionContainer=new \Common\Model\CfsInstructionCtnModel();
+			//检查该箱在该指令是否已存在
+			$res = $instructionContainer->field("ctnno")->where("instruction_id='$instruction_id' and ctnno='$ctnno'")->find();
+			if($res['ctnno'] != '')
+			{
+				$this->error('该箱号已存在！');
+			}
 			$data=array(
 					'instruction_id'=>$instruction_id,
 					'ctnno'=>$ctnno,
@@ -45,7 +52,6 @@ class CfsInstructionContainerController extends BaseController
 					'pre_number'=>I('post.pre_number'),
 					'status'=>'0'
 			);
-			$instructionContainer=new \Common\Model\CfsInstructionCtnModel();
 			if(!$instructionContainer->create($data))
 			{
 				//对data数据进行验证
