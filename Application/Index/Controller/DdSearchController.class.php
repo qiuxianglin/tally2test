@@ -111,7 +111,7 @@ class DdSearchController extends Controller
 			$where.=" and p.unpackagingplace='$unpackagingplace'";
 		}
 		$DdPlanContainer=new \Common\Model\DdPlanContainerModel();
-		$count=$DdPlanContainer->alias('c')->join("left join tally_dd_operation o on o.ctn_id=c.id")->where($where)->count();
+		$count=$DdPlanContainer->alias('c')->join("left join tally_dd_operation o on o.ctn_id=c.id")->join("left join tally_dd_plan p on p.id=c.plan_id")->where($where)->count();
 		$per = 15;
 		if($_GET['p'])
 		{
@@ -268,7 +268,7 @@ class DdSearchController extends Controller
 			$where.=" and p.content like '".'%"blno":"'. $bl_no .'%\'';
 		}
 		$DdProve=new \Common\Model\DdProveModel();
-		$count=$DdProve->count();
+		$count=$DdProve->alias('p')->where($where)->count();
 		$per = 15;
 		if($_GET['p'])
 		{
