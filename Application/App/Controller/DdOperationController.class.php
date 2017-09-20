@@ -169,7 +169,7 @@ class DdOperationController extends  BaseController
 					{
 						//判断该箱是否存在作业记录，存在的情况下修改作业的操作人
 						$DdOperation=new \Common\Model\DdOperationModel();
-						$res_o=$DdOperation->where("ctn_id=$ctn_id")->field('id')->find();
+						$res_o=$DdOperation->where("ctn_id='$ctn_id'")->field('id,step')->find();
 						if($res_o['id']!='')
 						{
 							//存在记录，修改操作人
