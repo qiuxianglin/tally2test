@@ -22,7 +22,7 @@ $(function(){
 		<div class="right">
 			<div class="right_top" style="background: none; border: 0;">
 				<div class="right_l" style="font-size: 16px;">
-					当前位置：<a href="__MODULE__/CfsInstructionContainer/detail">CFS装箱</a>&nbsp;&gt;&nbsp;查看作业详情
+					当前位置：<a href="__MODULE__/CfsInstruction/index">CFS装箱</a>&nbsp;&gt;&nbsp;查看作业详情
 				</div>
 			</div>
 

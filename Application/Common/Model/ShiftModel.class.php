@@ -1343,31 +1343,6 @@ class ShiftModel extends Model {
 							}
 							break;
 						case 'dd':
-							//根据指令ID获取预报计划ID
-							$instruction = new \Common\Model\DdInstructionModel();
-							$plan_id = $instruction->field("plan_id")->where("id='$instruction_id'")->find();
-							//根据预报计划ID获取预报箱
-							$planid = $plan_id['plan_id'];
-							$planctn = new \Common\Model\DdPlanContainerModel();
-							$plan_ctn = $planctn->where("plan_id='$planctn'")->select();
-							//判断指令下的工作中的配箱是否暂停作业
-							foreach($plan_ctn as $v)
-							{
-								if($v['status'] == 1)
-								{
-									$operation = new \Common\Model\DdOperationModel();
-									$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop')->find();									$res_r = $operation->where("ctn_id='".$v['id']."'")->field('is_stop')->find();
-									if($res_r['is_stop'] != 'Y')
-									{
-										$res = array(
-												'code'  =>  "211",
-												'msg'   =>  "该工班（拆箱）还有工作的箱子未暂停作业"
-										);
-										return $res;
-										exit;
-									}
-								}
-							}
 							break;
 							
 					}

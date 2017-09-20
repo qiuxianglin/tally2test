@@ -110,7 +110,7 @@ class CfsSearchController extends Controller
 		 LEFT JOIN tally_ship s on i.ship_id=s.id
 		 LEFT JOIN tally_port po on ic.port_id=po.id
 		 LEFT JOIN tally_cfs_operation o on o.ctn_id=c.id
-		 where $where GROUP BY c.id order by c.id desc limit $begin_num,$per
+		 where $where GROUP BY c.id order by c.status ASC,c.id desc limit $begin_num,$per
 		";
 		// $sql="select i.voyage, s.ship_name,l.location_name,c.* from __PREFIX__cfs_instruction i,__PREFIX__cfs_instruction_ctn c ,__PREFIX__location l,__PREFIX__ship s,__PREFIX__cfs_instruction_cargo ic where i.id=c.instruction_id and l.id=i.location_id and s.id=i.ship_id and $where and ic.instruction_id=i.id group by c.id order by c.id desc limit $begin_num,$per";
 		$list=M()->query($sql);
