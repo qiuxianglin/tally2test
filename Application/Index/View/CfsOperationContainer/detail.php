@@ -94,7 +94,7 @@ $(function(){
 										<th>残损件数</th>
 										<th>货残损照片</th>
 										<th>理货员</th>
-<!-- 										<th>操作</th> -->
+										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -137,9 +137,10 @@ $(function(){
 												?>
 										</td>
 										<td>{$l['user_name']}</td>
-<!-- 										<td> 
-										   <a href="__MODULE__/CfsOperationLevel/edit/id/{$vo['operation_id']}/level_id/{$vo['levelpictureid']}" style="background-color: rgb(51, 152, 219) ! important; border-color: rgb(213, 213, 213); color: rgb(255, 255, 255); font-size: 16px; text-align: center; padding: 3px 15px;" class="box">修改</a>
- 										</td>  -->
+										<td> 
+										   <a href="__CONTROLLER__/editlevel/operation_id/{$l['operation_id']}/level_id/{$l['id']}"
+											class="box">修改</a>
+ 										</td>
 									</tr>
 									</volist>
 								</tbody>

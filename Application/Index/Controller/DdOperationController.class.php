@@ -90,7 +90,7 @@ class DdOperationController extends BaseController
 		}
 	}
 
-//修改关
+	//修改关
 	public function editlevel($operation_id,$level_id)
 	{
 		layout(false);
@@ -236,7 +236,6 @@ class DdOperationController extends BaseController
 				if($res_d!==false)
 				{
 					// 重新生成单证
-// 					$document = new \Common\Model\DdProveModel();
 					$prove->generateDocument($ctn_id,$ccremark);
 					echo '<script>alert("修改成功");top.location.reload(true);window.close();</script>';
 					exit ();

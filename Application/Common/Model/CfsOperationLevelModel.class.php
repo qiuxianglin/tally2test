@@ -106,5 +106,21 @@ class CfsOperationLevelModel extends Model
 		return $num;
 	}
 	
+	/**
+	 * 获取关详情
+	 *
+	 * @param int $level_id:关ID
+	 * @return array|boolean
+	 */
+	public function getLevelMsg($level_id)
+	{
+		$msg = $this->where ( "id=$level_id" )->find ();
+		if ($msg !== false)
+		{
+			return $msg;
+		} else {
+			return false;
+		}
+	}
 }
 ?>
