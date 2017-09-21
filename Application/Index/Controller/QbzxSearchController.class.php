@@ -310,9 +310,11 @@ class QbzxSearchController extends BaseController
 			$level = new \Common\Model\QbzxOperationLevelModel ();
 			$levellist = $level->getLevelList ( $operation_id );
 			$this->assign ( 'levellist', $levellist );
+			//修改记录-待做
+			$user = new \Common\Model\UserModel();
+			$amendlist=$user->getamend('qbzx',$operation_id);
+			$this->assign('amendlist',$amendlist);
 		}
-		// 修改记录-待做
-		// dump($levellist);die;
 		$this->display ();
 	}
 	

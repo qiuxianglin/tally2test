@@ -202,7 +202,7 @@ $(function(){
 									}
 									?>
 									</td>
-									<td>{$vo['man']}</td>
+									<td>{$vo['user_name']}</td>
 									<td>{$vo['date']}</td>
 									<td>{$vo['remark']}</td>
 								</tr>

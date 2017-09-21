@@ -321,8 +321,11 @@ class DdSearchController extends Controller
 			$DdOperationLevel=new \Common\Model\DdOperationLevelModel();
 			$levellist=$DdOperationLevel->getLevelList($operation_id);
 			$this->assign('levellist',$levellist);
+			//修改记录-待做
+			$user = new \Common\Model\UserModel();
+			$amendlist=$user->getamend('dd',$operation_id);
+			$this->assign('amendlist',$amendlist);
 		}
-		//修改记录-待做
 		$this->display();
 	}
 	

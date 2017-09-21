@@ -306,8 +306,11 @@ class CfsSearchController extends Controller
 			$level=new \Common\Model\CfsOperationLevelModel();
 			$levellist=$level->getLevelList($operation_id);
 			$this->assign('levellist',$levellist);
+			//修改记录-待做
+			$user = new \Common\Model\UserModel();
+			$amendlist=$user->getamend('cfs',$operation_id);
+			$this->assign('amendlist',$amendlist);
 		}
-		//修改记录-待做
 		$this->display();
 	}
 	

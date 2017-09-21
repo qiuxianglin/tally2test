@@ -130,7 +130,7 @@ $(function(){
 							<p>批注：{$msg['remark']}</p>
 						</div>
 						
-						<!-- 
+						
 						<div class="clear" style="width: 950px;"></div>
 
 						<div style="text-align: center; width: 950px;">
@@ -155,19 +155,16 @@ $(function(){
 									<td>
 									<?php
 									switch ($vo ['field_name']) {
-										case 'sealNo' :
+										case 'sealno' :
 											echo '铅封号';
 											break;
-										case 'cargoNumber' :
+										case 'num' :
 											echo '货物件数';
 											break;
-										case 'damageNo' :
+										case 'damage_num' :
 											echo '残损件数';
 											break;
-										case 'orderno' :
-											echo '提单号';
-											break;
-										case 'sealPicture' :
+										case 'seal_picture' :
 											echo '铅封照片';
 											break;
 									}
@@ -191,14 +188,13 @@ $(function(){
 									}
 									?>
 									</td>
-									<td>{$vo['man']}</td>
+									<td>{$vo['user_name']}</td>
 									<td>{$vo['date']}</td>
 									<td>{$vo['remark']}</td>
 								</tr>
 								</volist>
 							</tbody>
 						</table>
-						 -->
 					</div>
 				</div>
 			</div>

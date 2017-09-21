@@ -554,5 +554,12 @@ class UserModel extends Model
 		}
 		return $res;
 	}
+	
+	//获取修改表内容
+	public function getamend ($business,$operation_id)
+	{
+		$amendlist = D('amend')->field("a.*,u.user_name")->alias("a")->join("left join tally_user u on u.uid=a.uid")->where("business='$business' and operation_id='$operation_id'")->select();
+		return $amendlist;
+	}
 }
 ?>
