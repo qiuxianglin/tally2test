@@ -22,7 +22,7 @@ $(function(){
 		<div class="right">
 			<div class="right_top" style="background: none; border: 0">
 				<div class="right_l" style="font-size: 16px;">
-					当前位置：查询统计</a>&nbsp;&gt;&nbsp;门到门拆箱预报计划</a>
+					当前位置：查询统计</a>&nbsp;&gt;&nbsp;拆箱系统预报计划</a>
 				</div>
 			</div>
 

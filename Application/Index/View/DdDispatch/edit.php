@@ -1,6 +1,6 @@
 
 <head>
-<title>门到门拆箱-修改派工</title>
+<title>拆箱系统-修改派工</title>
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" />
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/css/rule.css" />
 <script type="text/javascript" src="__PUBLIC__/admin/js/jquery.min.js"></script>

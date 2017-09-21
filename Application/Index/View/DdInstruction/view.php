@@ -1,5 +1,5 @@
 <head>
-<title>门到门拆箱_指令详情</title>
+<title>拆箱系统_指令详情</title>
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" />
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/css/rule.css" />
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/css/nff.css" />
@@ -27,7 +27,7 @@ $(function(){
 		<div class="right">
 			<div class="right_top" style="background: none; border: 0">
 				<div class="right_l" style="font-size: 16px;">
-					当前位置：<a href="__CONTROLLER__/index">门到门拆箱</a>&nbsp;&gt;&nbsp;指令详情
+					当前位置：<a href="__CONTROLLER__/index">拆箱系统</a>&nbsp;&gt;&nbsp;指令详情
 				</div>
 			</div>
 			
