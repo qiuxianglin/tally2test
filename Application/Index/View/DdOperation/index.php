@@ -146,6 +146,7 @@ $(function(){
 										<th>残损件数</th>
 										<th>货残损照片</th>
 										<th>理货员</th>
+										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -190,6 +191,9 @@ $(function(){
 												?>
 										</td>
 										<td>{$l['user_name']}</td>
+										<td><a
+											href="__CONTROLLER__/editlevel/operation_id/{$l['operation_id']}/level_id/{$l['id']}"
+											class="box">修改</a></td>
 									</tr>
 									</volist>
 								</tbody>

@@ -8,7 +8,7 @@ return array (
 		'DB_HOST'	=>'localhost',
 		'DB_NAME'	=>'tally2_data',  // 数据库名
 		'DB_USER'	=>'root',  //账号
-		'DB_PWD'	=>'root', //密码
+		'DB_PWD'	=>'000000', //密码
 		'DB_PORT'	=>'3306',
 		'DB_CHARSET' => 'utf8',
 		'DB_PREFIX'	=>'tally_', //数据表前缀

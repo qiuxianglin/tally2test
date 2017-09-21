@@ -229,7 +229,6 @@ class DdProveModel extends Model
 					);
 				}
 			}
-// 	$res = $data;
 		}else{
 			$res = array (
 				'code' => $this->ERROR_CODE_DOCUMENT ['DOCUMENT_ALREADY_EXIST'],
