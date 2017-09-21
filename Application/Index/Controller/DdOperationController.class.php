@@ -220,7 +220,7 @@ class DdOperationController extends BaseController
 			$container = new \Common\Model\DdPlanContainerModel();
 			$ctnMsg = $container->where("id='$ctn_id'")->field('status')->find();
 			$status = $ctnMsg['status'];
-			if($status != '2')
+			if($res_c['operation_examine'] != '2')
 			{
 				echo '<script>alert("修改成功");top.location.reload(true);window.close();</script>';
 				exit ();
