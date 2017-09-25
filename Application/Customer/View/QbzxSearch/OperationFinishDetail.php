@@ -5,6 +5,7 @@
 	href="__PUBLIC__/admin/css/rule.css" />
 <script type="text/javascript"
 	src="__PUBLIC__/js/jquery.firstebox.pack.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
 <style type="text/css" media="all">
 @import "__PUBLIC__/css/firstebox.css";
 

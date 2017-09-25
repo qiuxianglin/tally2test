@@ -83,6 +83,4 @@ class BaseController extends Controller
 			$this->error ( '没有权限' );
 		}
 	}
-
-	
 }

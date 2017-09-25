@@ -93,80 +93,89 @@ class DdSearchController extends CommonController
 		// 已完成
 		$ctn_status_finished=$ctn_status['finished'];
 		$id = $_SESSION['id'];
-		$where="c.status in (1,2) and cu.id=$id and o.operation_examine in (1,3)";
-		if(I('get.vslname'))
-		{
-			$vslname=I('get.vslname');
-			$vslname = str_replace("'", "", $vslname);
-			$where.=" and p.vslname='$vslname'";
-		}
-		if(I('get.voyage'))
-		{
-			$voyage=I('get.voyage');
-			$voyage = str_replace("'", "", $voyage);
-			$where.=" and p.voyage='$voyage'";
-		}
-		if(I('get.unpackagingplace'))
-		{
-			$unpackagingplace=I('get.unpackagingplace');
-			$where.=" and p.unpackagingplace='$unpackagingplace'";
-		}
-		$DdPlanContainer=new \Common\Model\DdPlanContainerModel();
-		$sql="select p.vslname,p.voyage,p.unpackagingplace,c.* from __PREFIX__dd_plan p,__PREFIX__dd_plan_container  c,__PREFIX__dd_plan_cargo ca,__PREFIX__customer cu,__PREFIX__dd_operation o where $where and p.id=c.plan_id and p.id=ca.plan_id and ca.paycode=cu.customer_code and o.ctn_id = c.id";
-		$count=count(M()->query($sql));
-		$per = 15;
-		if($_GET['p'])
-		{
-			$p=$_GET['p'];
-		}else {
-			$p=1;
-		}
-		// 分页显示输出
-		$Page=new \Common\Model\PageModel();
-		$show= $Page->show($count,$per);
-		$this->assign('page',$show);
-			
-		$begin_num=($p-1)*$per;
-		$sql="select p.vslname,p.voyage,p.unpackagingplace,c.* from __PREFIX__dd_plan p,__PREFIX__dd_plan_container c,__PREFIX__dd_plan_cargo ca,__PREFIX__customer cu,__PREFIX__dd_operation o where $where and p.id=c.plan_id and p.id=ca.plan_id and ca.paycode=cu.customer_code and o.ctn_id = c.id order by c.id desc limit $begin_num,$per";
-		$list=M()->query($sql);
-		//遍历结果，取出其它数据
-		$num=count($list);
-		$DdOperationLevel=new \Common\Model\DdOperationLevelModel();
-		for ($i=0;$i<$num;$i++)
-		{
-			$ctn_id=$list[$i]['id'];
-			$DdOperation=new \Common\Model\DdOperationModel();
-			$res_o=$DdOperation->where("ctn_id=$ctn_id")->find();
-			if($res_o['id']!='')
+		$customer_code = $_SESSION['customer_code'];
+		$CargoModel = new \Common\Model\DdPlanCargoModel();
+		$plan_ids = $CargoModel->field('plan_id')->where("paycode='$customer_code'")->select();
+		if($plan_ids){
+			foreach($plan_ids as $v){
+				$arr[] = $v['plan_id'];
+			}
+			$ids = '('.implode(',',$arr).')';
+			$where="c.status in (1,2) and c.plan_id in $ids and o.operation_examine in (1,3)";
+			if(I('get.vslname'))
 			{
-				$operation_id=$res_o['id'];
-				$list[$i]['begin_time']=$res_o['begin_time'];
-				//关数
-				$levelnum=$DdOperationLevel->sumLevelNum($operation_id);
-				$list[$i]['levelnum']=$levelnum;
-				//货物件数
-				$cargonum=$DdOperationLevel->sumCargoNum($operation_id);
-				$list[$i]['cargonum']=$cargonum;
-				//残损件数
-				$damage_num=$DdOperationLevel->sumDamageNum($operation_id);
-				$list[$i]['damage_num']=$damage_num;
-				//最新操作时间
-				$res_new=$DdOperationLevel->where("operation_id=$operation_id")->field('createtime')->order("id desc")->find();
-				if($res_new['createtime']!='')
+				$vslname=I('get.vslname');
+				$vslname = str_replace("'", "", $vslname);
+				$where.=" and p.vslname='$vslname'";
+			}
+			if(I('get.voyage'))
+			{
+				$voyage=I('get.voyage');
+				$voyage = str_replace("'", "", $voyage);
+				$where.=" and p.voyage='$voyage'";
+			}
+			if(I('get.unpackagingplace'))
+			{
+				$unpackagingplace=I('get.unpackagingplace');
+				$where.=" and p.unpackagingplace='$unpackagingplace'";
+			}
+			$DdPlanContainer=new \Common\Model\DdPlanContainerModel();
+			$sql="select p.vslname,p.voyage,p.unpackagingplace,c.* from __PREFIX__dd_plan p,__PREFIX__dd_plan_container  c,__PREFIX__dd_operation o where $where and p.id=c.plan_id and o.ctn_id = c.id";
+			$count=count(M()->query($sql));
+			$per = 15;
+			if($_GET['p'])
+			{
+				$p=$_GET['p'];
+			}else {
+				$p=1;
+			}
+			// 分页显示输出
+			$Page=new \Common\Model\PageModel();
+			$show= $Page->show($count,$per);
+			$this->assign('page',$show);
+			
+			$begin_num=($p-1)*$per;
+			$sql="select p.vslname,p.voyage,p.unpackagingplace,c.* from __PREFIX__dd_plan p,__PREFIX__dd_plan_container c,__PREFIX__dd_plan_cargo ca,__PREFIX__dd_operation o where $where and p.id=c.plan_id and p.id=ca.plan_id  and o.ctn_id = c.id order by c.id desc limit $begin_num,$per";
+			$list=M()->query($sql);
+			//遍历结果，取出其它数据
+			$num=count($list);
+			$DdOperationLevel=new \Common\Model\DdOperationLevelModel();
+			for ($i=0;$i<$num;$i++)
+			{
+				$ctn_id=$list[$i]['id'];
+				$DdOperation=new \Common\Model\DdOperationModel();
+				$res_o=$DdOperation->where("ctn_id=$ctn_id")->find();
+				if($res_o['id']!='')
 				{
-					$list[$i]['newtime']=$res_new['createtime'];
-				}else {
-					$list[$i]['newtime']=$res_o['begin_time'];
-				}
-				$time1 = strtotime ( $list[$i]['newtime'] );
-				$time2 = time ();
-				if (($time2 - $time1) / 300 > 1) 
-				{
-					$list [$i] ['red'] = 1;
+					$operation_id=$res_o['id'];
+					$list[$i]['begin_time']=$res_o['begin_time'];
+					//关数
+					$levelnum=$DdOperationLevel->sumLevelNum($operation_id);
+					$list[$i]['levelnum']=$levelnum;
+					//货物件数
+					$cargonum=$DdOperationLevel->sumCargoNum($operation_id);
+					$list[$i]['cargonum']=$cargonum;
+					//残损件数
+					$damage_num=$DdOperationLevel->sumDamageNum($operation_id);
+					$list[$i]['damage_num']=$damage_num;
+					//最新操作时间
+					$res_new=$DdOperationLevel->where("operation_id=$operation_id")->field('createtime')->order("id desc")->find();
+					if($res_new['createtime']!='')
+					{
+						$list[$i]['newtime']=$res_new['createtime'];
+					}else {
+						$list[$i]['newtime']=$res_o['begin_time'];
+					}
+					$time1 = strtotime ( $list[$i]['newtime'] );
+					$time2 = time ();
+					if (($time2 - $time1) / 300 > 1) 
+					{
+						$list [$i] ['red'] = 1;
+					}
 				}
 			}
+			$this->assign('list',$list);
 		}
-		$this->assign('list',$list);
 		$this->display();
 	}
 	
@@ -219,87 +228,82 @@ class DdSearchController extends CommonController
 		$customer_code = $_SESSION['customer_code'];
 		$CargoModel = new \Common\Model\DdPlanCargoModel();
 		$plan_ids = $CargoModel->field('plan_id')->where("paycode='$customer_code'")->select();
-		foreach($plan_ids as $v){
-			$arr[] = $v['plan_id'];
-		}
-		$ids = '('.implode(',',$arr).')';
-		$where = "c.plan_id in $ids";
-		//$where="pc.paycode='$customer_code'";
-		if(I('get.ship_name'))
-		{
-			$ship_name=I('get.ship_name');
-			$ship_name = str_replace("'", "", $ship_name);
-			$where.=" and p.ship_name='$ship_name'";
-		}
-		if(I('get.vargo'))
-		{
-			$vargo=I('get.vargo');
-			$vargo = str_replace("'", "", $vargo);
-			$where.=" and p.vargo='$vargo'";
-		}
-		if(I('get.location_id'))
-		{
-			$location_id=I('get.location_id');
-			$where.=" and p.location_id=$location_id";
-		}
-		if(I('get.ctn_no'))
-		{
-			$ctn_no=I('get.ctn_no');
-			$ctn_no = str_replace("'", "", $ctn_no);
-			$where.=" and p.ctn_no='$ctn_no'";
-		}
-		if(I('get.flflag'))
-		{
-			$flflag=I('get.flflag');
-			$where.=" and p.flflag='$flflag'";
-		}
-		if(I('get.ctn_type_code'))
-		{
-			$ctn_type_code=I('get.ctn_type_code');
-			$ctn_type_code = str_replace("'", "", $ctn_type_code);
-			$where.=" and p.ctn_type_code='$ctn_type_code'";
-		}
-		if (I('get.begin_time') && I ('get.end_time')) 
-		{
-			$begin_time = I ( 'begin_time' );
-			$end_time = I ( 'end_time' );
-			$end_time=strtotime("$end_time +1 day");
-			$end_time=date('Y-m-d',$end_time);
-			$where .= " and p.createtime between '$begin_time' and '$end_time' ";
-		}
-		if( I ('post.bl_no') )
-		{
-			$bl_no=I('post.bl_no');
-			$bl_no = str_replace("'", "", $bl_no);
-			$where.=" and p.content like '".'%"bl_no":"'. $bl_no .'%\'';
-		}
-		$DdProve=new \Common\Model\DdProveModel();
-		$count = $DdProve->field("p.*")->alias('p')
-		->join("tally_dd_plan_container c on c.id=p.ctn_id")
-		->where($where)->count();
+		if($plan_ids){
+			foreach($plan_ids as $v){
+				$arr[] = $v['plan_id'];
+			}
+			$ids = '('.implode(',',$arr).')';
+			$where = "c.plan_id in $ids";
+			if(I('get.ship_name'))
+			{
+				$ship_name=I('get.ship_name');
+				$ship_name = str_replace("'", "", $ship_name);
+				$where.=" and p.ship_name='$ship_name'";
+			}
+			if(I('get.vargo'))
+			{
+				$vargo=I('get.vargo');
+				$vargo = str_replace("'", "", $vargo);
+				$where.=" and p.vargo='$vargo'";
+			}
+			if(I('get.location_id'))
+			{
+				$location_id=I('get.location_id');
+				$where.=" and p.location_id=$location_id";
+			}
+			if(I('get.ctn_no'))
+			{
+				$ctn_no=I('get.ctn_no');
+				$ctn_no = str_replace("'", "", $ctn_no);
+				$where.=" and p.ctn_no='$ctn_no'";
+			}
+			if(I('get.flflag'))
+			{
+				$flflag=I('get.flflag');
+				$where.=" and p.flflag='$flflag'";
+			}
+			if(I('get.ctn_type_code'))
+			{
+				$ctn_type_code=I('get.ctn_type_code');
+				$ctn_type_code = str_replace("'", "", $ctn_type_code);
+				$where.=" and p.ctn_type_code='$ctn_type_code'";
+			}
+			if (I('get.begin_time') && I ('get.end_time')) 
+			{
+				$begin_time = I ( 'begin_time' );
+				$end_time = I ( 'end_time' );
+				$end_time=strtotime("$end_time +1 day");
+				$end_time=date('Y-m-d',$end_time);
+				$where .= " and p.createtime between '$begin_time' and '$end_time' ";
+			}
+			if( I ('post.bl_no') )
+			{
+				$bl_no=I('post.bl_no');
+				$bl_no = str_replace("'", "", $bl_no);
+				$where.=" and p.content like '".'%"bl_no":"'. $bl_no .'%\'';
+			}
+			$DdProve=new \Common\Model\DdProveModel();
+			$count = $DdProve->field("p.*")->alias('p')
+			->join("tally_dd_plan_container c on c.id=p.ctn_id")
+			->where($where)->count();
+			$per = 15;
+			if($_GET['p'])
+			{
+				$p=$_GET['p'];
+			}else {
+				$p=1;
+			}
+			// 分页显示输出
+			$Page=new \Common\Model\PageModel();
+			$show= $Page->show($count, $per);
+			$this->assign('page',$show);
+			$begin_num=($p-1)*$per;
+			$list = $DdProve->field("p.*")->alias('p')
+			->join("tally_dd_plan_container c on c.id=p.ctn_id")
+			->where($where)->page($p.','.$per)->order('p.id desc')->select();
 		
-		/* $sql="select p.*,pl.business from __PREFIX__dd_prove p,__PREFIX__ship s,__PREFIX__location l,__PREFIX__dd_plan_container c,__PREFIX__dd_plan pl,__PREFIX__dd_plan_cargo ca,__PREFIX__customer cu where $where and p.ship_id=s.id and p.location_id=l.id and p.ctn_id=c.id and c.plan_id=pl.id and pl.id=ca.plan_id and ca.paycode=cu.customer_code";
-		$res=M()->query($sql);
-		$count=count($res); */
-		$per = 15;
-		if($_GET['p'])
-		{
-			$p=$_GET['p'];
-		}else {
-			$p=1;
+			$this->assign('list',$list);
 		}
-		// 分页显示输出
-		$Page=new \Common\Model\PageModel();
-		$show= $Page->show($count, $per);
-		$this->assign('page',$show);
-		$begin_num=($p-1)*$per;
-		$list = $DdProve->field("p.*")->alias('p')
-		->join("tally_dd_plan_container c on c.id=p.ctn_id")
-		->where($where)->page($p.','.$per)->order('p.id desc')->select();
-		/* $sql="select p.*,pl.business from __PREFIX__dd_prove p,__PREFIX__ship s,__PREFIX__location l,__PREFIX__dd_plan_container c,__PREFIX__dd_plan pl,__PREFIX__dd_plan_cargo ca,__PREFIX__customer cu where $where and p.ship_id=s.id and p.location_id=l.id and p.ctn_id=c.id and c.plan_id=pl.id and pl.id=ca.plan_id and ca.paycode=cu.customer_code order by p.id desc limit $begin_num,$per";
-		$list=M()->query($sql); */
-		
-		$this->assign('list',$list);
 		$this->display();
 	}
 	
@@ -354,70 +358,73 @@ class DdSearchController extends CommonController
 		$this->assign('locationlist',$locationlist);
 	
 		$id = $_SESSION['id'];
-		$where="cu.id=$id";
-		if(I('get.ship_name'))
-		{
-			$ship_name=I('get.ship_name');
-			$ship_name = str_replace("'", "", $ship_name);
-			$where.=" and p.ship_name='$ship_name'";
-		}
-		if(I('get.vargo'))
-		{
-			$vargo=I('get.vargo');
-			$vargo = str_replace("'", "", $vargo);
-			$where.=" and p.vargo='$vargo'";
-		}
-		if(I('get.location_id'))
-		{
-			$location_id=I('get.location_id');
-			$where.=" and p.location_id='$location_id'";
-		}
-		if(I('get.ctn_no'))
-		{
-			$ctn_no=I('get.ctn_no');
-			$ctn_no = str_replace("'", "", $ctn_no);
-			$where.=" and p.ctn_no='$ctn_no'";
-		}
-		if(I('get.flflag'))
-		{
-			$flflag=I('get.flflag');
-			$where.=" and p.flflag='$flflag'";
-		}
-		if (I ( 'begin_time' ) && I ( 'end_time' ))
-		{
-			$begin_time = I ( 'get.begin_time' );
-			$end_time = I ( 'get.end_time' );
-			$end_time=strtotime("$end_time +1 day");
-			$end_time=date('Y-m-d',$end_time);
-			$where .= " and p.createtime between '$begin_time' and '$end_time' ";
-		}
-		$DdProve=new \Common\Model\DdProveModel();
-		//单证总数
-		$count = $DdProve->alias('p')->field('p.*')
+		$customer_code = $_SESSION['customer_code'];
+		$CargoModel = new \Common\Model\DdPlanCargoModel();
+		$plan_ids = $CargoModel->field('plan_id')->where("paycode='$customer_code'")->select();
+		if($plan_ids){
+			foreach($plan_ids as $v){
+				$arr[] = $v['plan_id'];
+			}
+			$ids = '('.implode(',',$arr).')';
+			$where="c.plan_id in $ids";
+			if(I('get.ship_name'))
+			{
+				$ship_name=I('get.ship_name');
+				$ship_name = str_replace("'", "", $ship_name);
+				$where.=" and p.ship_name='$ship_name'";
+			}
+			if(I('get.vargo'))
+			{
+				$vargo=I('get.vargo');
+				$vargo = str_replace("'", "", $vargo);
+				$where.=" and p.vargo='$vargo'";
+			}
+			if(I('get.location_id'))
+			{
+				$location_id=I('get.location_id');
+				$where.=" and p.location_id='$location_id'";
+			}
+			if(I('get.ctn_no'))
+			{
+				$ctn_no=I('get.ctn_no');
+				$ctn_no = str_replace("'", "", $ctn_no);
+				$where.=" and p.ctn_no='$ctn_no'";
+			}
+			if(I('get.flflag'))
+			{
+				$flflag=I('get.flflag');
+				$where.=" and p.flflag='$flflag'";
+			}
+			if (I ( 'begin_time' ) && I ( 'end_time' ))
+			{
+				$begin_time = I ( 'get.begin_time' );
+				$end_time = I ( 'get.end_time' );
+				$end_time=strtotime("$end_time +1 day");
+				$end_time=date('Y-m-d',$end_time);
+				$where .= " and p.createtime between '$begin_time' and '$end_time' ";
+			}
+			$DdProve=new \Common\Model\DdProveModel();
+			//单证总数
+			$count = $DdProve->alias('p')->field('p.*')
 				->join('tally_dd_plan_container c ON p.ctn_id=c.id')
-				->join('tally_dd_plan pl ON c.plan_id=pl.id')
-				->join('tally_dd_plan_cargo ca ON pl.id=ca.plan_id')
-				->join('tally_customer cu ON ca.paycode=cu.customer_code')
 				->where ( $where )->count();
-		$per = 15;
-		if ($_GET ['p']) {
-			$p = $_GET ['p'];
-		} else {
-			$p = 1;
-		}
-		// 分页显示输出
-		$Page=new \Common\Model\PageModel();
-		$show = $Page->show ($count, $per); 
-		$this->assign ( 'page', $show );
+			$per = 15;
+			if ($_GET ['p']) {
+				$p = $_GET ['p'];
+			} else {
+				$p = 1;
+			}
+			// 分页显示输出
+			$Page=new \Common\Model\PageModel();
+			$show = $Page->show ($count, $per); 
+			$this->assign ( 'page', $show );
 	
-		//列表
-		$list = $DdProve->alias('p')->field('p.*')
+			//列表
+			$list = $DdProve->alias('p')->field('p.*')
 				->join('tally_dd_plan_container c ON p.ctn_id=c.id')
-				->join('tally_dd_plan pl ON c.plan_id=pl.id')
-				->join('tally_dd_plan_cargo ca ON pl.id=ca.plan_id')
-				->join('tally_customer cu ON ca.paycode=cu.customer_code')
 				->where($where)->page($p.','.$per)->order('p.id desc')->select();
-		$this->assign('list',$list);
+			$this->assign('list',$list);
+		}
 		$this->display();
 	}
 	

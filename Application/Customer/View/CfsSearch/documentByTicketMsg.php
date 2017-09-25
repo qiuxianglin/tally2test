@@ -11,6 +11,36 @@ $(function(){
 	$('.right_list2').find('table tbody tr:even').css('background','#fff');	
 })
 </script>
+<style>
+#wapper, .right, .right_t {
+	width: 1000px
+}
+
+.amsg {
+	width: 940px;
+	margin: 0 auto;
+	padding-left: 5px
+}
+
+.amsg p {
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	text-align: left;
+}
+
+.right_t table td .article {
+	width: 150px
+}
+
+.remark {
+	width: 930px;
+	margin: 10px auto;
+	text-align: left;
+	border: 1px solid #888;
+	padding: 5px;
+}
+</style>
 </head>
 
 <body>
@@ -21,10 +51,10 @@ $(function(){
 					当前位置：<a href="__MODULE__/CfsSearch/real_time">CFS查询</a>&nbsp;&gt;&nbsp;分票单证详情
 				</div>
 			</div>
-			<div class="right_list2">
+			<div class="right_t" style="text-align: center;">
 			<div  id="printContent">
 			    <h1 style="font-size: 20px;color:#000;text-align:center;margin-bottom:10px">装拆箱单证</h1>
-				<div class="amsg" style="width: 940px;">
+				<div class="amsg">
 					<p>船名：{$instructionMsg['ship_name']}&nbsp;&nbsp;&nbsp;&nbsp;
 						航次：{$instructionMsg['voyage']}&nbsp;&nbsp;&nbsp;&nbsp;
 						提单号：{$instructionMsg['blno']}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,9 +68,9 @@ $(function(){
 					</p>
 				</div>
 				<div style="clear: both; margin-top: 10px;"></div>
-				<div class="row" style="margin-top: 10px;">
+				<div class="row">
 					<div class="col-xs-12">
-						<table class="table" style="width: 940px;">
+						<table class="table" style="width: 940px; margin: 0 auto; text-align: center;">
 							<thead>
 								<tr>
 									<th>序号</th>
@@ -95,7 +125,7 @@ $(function(){
 			</div>
 				<p style="width: 940px; margin: 0 auto">
 					<a id="add" class="btnPrint" href="javascript:;"
-						style="float: right; margin: -4px 0; text-align: center;">打印</a>
+						style="float: right; margin: -4px 10px 6px; text-align: center;">打印</a>
 				</p>
 
 				<div style="clear: both; margin-top: 10px"></div>
